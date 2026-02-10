@@ -1,227 +1,70 @@
-:root {
-  --bg: #0f1221;
-  --panel: #161a2f;
-  --muted: #a0a8d1;
-  --text: #f3f5ff;
-  --accent: #5d87ff;
-  --accent-2: #7a5dff;
-  --success: #1fcb8d;
-}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KickStore | E-commerce Sneakers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">KickStore</div>
+    <nav>
+      <a href="#nouveautes">Nouveautés</a>
+      <a href="#catalogue">Catalogue</a>
+      <a href="#about">À propos</a>
+    </nav>
+    <button class="cart-btn" id="open-cart" aria-label="Ouvrir le panier">🛒 <span id="cart-count">0</span></button>
+  </header>
 
-* { box-sizing: border-box; }
+  <main>
+    <section class="hero" id="nouveautes">
+      <div>
+        <p class="eyebrow">NOUVELLE COLLECTION</p>
+        <h1>Les baskets qui font la diff.</h1>
+        <p>Découvre notre sélection premium de sneakers lifestyle et performance.</p>
+        <a href="#catalogue" class="cta">Voir le catalogue</a>
+      </div>
+      <div class="hero-card">
+        <h3>Offre du jour</h3>
+        <p>-20% sur la gamme Running avec le code <strong>RUN20</strong>.</p>
+      </div>
+    </section>
 
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #0f1221 0%, #121733 100%);
-  color: var(--text);
-}
+    <section class="toolbar" id="catalogue">
+      <h2>Nos baskets</h2>
+      <select id="filter-category" aria-label="Filtrer par catégorie">
+        <option value="all">Toutes</option>
+        <option value="lifestyle">Lifestyle</option>
+        <option value="running">Running</option>
+        <option value="basketball">Basketball</option>
+      </select>
+    </section>
 
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(10, 13, 29, 0.85);
-  backdrop-filter: blur(8px);
-}
+    <section class="products" id="products-list"></section>
+  </main>
 
-.logo { font-size: 1.3rem; font-weight: 800; }
+  <aside class="cart-panel" id="cart-panel" aria-hidden="true">
+    <div class="cart-header">
+      <h3>Ton panier</h3>
+      <button id="close-cart" aria-label="Fermer le panier">✕</button>
+    </div>
+    <ul id="cart-items"></ul>
+    <div class="cart-footer">
+      <p>Total: <strong id="cart-total">0,00 €</strong></p>
+      <button id="checkout">Passer commande</button>
+    </div>
+  </aside>
 
-nav a {
-  color: var(--muted);
-  text-decoration: none;
-  margin: 0 0.8rem;
-}
+  <div class="overlay" id="overlay"></div>
 
-.cart-btn {
-  background: var(--accent);
-  color: white;
-  border: 0;
-  border-radius: 999px;
-  padding: 0.6rem 1rem;
-  cursor: pointer;
-}
+  <footer id="about">
+    <p>© 2026 KickStore — Front e-commerce de baskets.</p>
+  </footer>
 
-main {
-  width: min(1120px, 92%);
-  margin: 1.4rem auto 3rem;
-}
-
-.hero {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 1rem;
-  background: var(--panel);
-  border-radius: 24px;
-  padding: 2rem;
-}
-
-.eyebrow {
-  color: var(--success);
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.hero h1 {
-  font-size: clamp(1.9rem, 4vw, 3rem);
-  margin: 0.4rem 0;
-}
-
-.cta {
-  display: inline-block;
-  margin-top: 1rem;
-  text-decoration: none;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  color: white;
-  padding: 0.8rem 1.2rem;
-  border-radius: 12px;
-  font-weight: 700;
-}
-
-.hero-card {
-  background: #0f1430;
-  border: 1px solid #262c52;
-  border-radius: 16px;
-  padding: 1.2rem;
-}
-
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 2rem 0 1rem;
-}
-
-.toolbar select {
-  background: #111633;
-  color: var(--text);
-  border: 1px solid #283066;
-  border-radius: 12px;
-  padding: 0.6rem 0.8rem;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
-.product {
-  background: var(--panel);
-  border: 1px solid #21284f;
-  border-radius: 16px;
-  padding: 1rem;
-}
-
-.product .img {
-  height: 130px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  font-size: 2rem;
-  background: linear-gradient(135deg, #202856, #121738);
-}
-
-.badge {
-  display: inline-block;
-  margin-top: 0.8rem;
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
-.product h3 { margin: 0.5rem 0 0.2rem; }
-.product p { margin: 0.3rem 0; color: var(--muted); }
-
-.product-footer {
-  margin-top: 0.7rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.product button {
-  background: var(--accent);
-  border: 0;
-  color: white;
-  border-radius: 10px;
-  padding: 0.45rem 0.8rem;
-  cursor: pointer;
-}
-
-.cart-panel {
-  position: fixed;
-  right: -400px;
-  top: 0;
-  width: min(360px, 88vw);
-  height: 100dvh;
-  background: #0d1227;
-  border-left: 1px solid #29315d;
-  transition: right 0.25s ease;
-  z-index: 8;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.cart-panel.open { right: 0; }
-
-.cart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#cart-items {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0;
-  flex: 1;
-  overflow: auto;
-}
-
-#cart-items li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.7rem;
-  color: var(--muted);
-}
-
-.cart-footer button {
-  width: 100%;
-  background: var(--success);
-  color: #031015;
-  font-weight: 700;
-  border: 0;
-  border-radius: 10px;
-  padding: 0.7rem;
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(4, 8, 19, 0.6);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 7;
-}
-
-.overlay.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  padding-bottom: 2rem;
-}
-
-@media (max-width: 780px) {
-  .hero { grid-template-columns: 1fr; }
-  nav { display: none; }
-}
+  <script src="app.js"></script>
+</body>
+</html>
